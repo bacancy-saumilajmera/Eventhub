@@ -1,0 +1,22 @@
+<h1>Event</h1>
+
+<p>
+	Title: <%= @event.title %>
+</p>
+
+<p>
+	Description: <%= @event.description%>
+</p>
+<p>
+	Date: <%= @event.date.strftime("%d %b '%y") %>
+</p>
+
+<p>
+	Time: <%= @event.time.strftime("%l:%M %p Onwards") %>
+</p>
+</p>
+<% if @event.website == nil %>
+	<p>
+		Website: <%= @event.website %>
+	</p>
+<% end %>

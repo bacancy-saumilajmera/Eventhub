@@ -1,0 +1,76 @@
+<% if current_user %>
+		<%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+		<h1>All Upcoming Event</h1>
+ 		
+		<%= search_form_for @search do |f| %>
+		  <%= f.label :Search %>
+  		<%= f.search_field :description_or_title_cont %>
+
+  		<%= f.submit %>
+		<% end %>
+
+		<p>
+		<%= link_to "Add New Event", new_event_path %>
+		</p>
+
+		<p>
+		<%= link_to "My Profile", my_event_path %>
+		</p>
+		<% if current_user.has_role?:admin %>
+			<p>	
+			<%= link_to "Event Requests", event_requests_path %>
+			</p>
+		<% else %>
+			<p>
+			<%= link_to "Interested Events", interested_event_path %>
+			</p>
+		<% end %>
+	
+		<p>---------------------------------------------------</p>
+		<% @event.each do |e| %>
+		
+			<p>
+				Title: <%= e.title %>
+			</p>
+			
+			<p>
+				Description: <%= e.description%>
+			</p>
+			<p>
+				Date: <%= e.date.strftime("%d %b '%y") %>
+			</p>
+			<p>
+				Time: <%= e.time.strftime("%l:%M %p Onwards") %>
+			</p>
+			<p>
+				Address line 1:	<%= e.event_address.address_line1  	%>
+			</p>
+			<p>
+				Address line 2: <%= e.event_address.address_line2  	%>
+			</p>
+			<p>
+				Area: <%= e.event_address.area %>
+			</p>
+			<p>
+				City: <%= e.event_address.city %>
+			</p>
+			<% if e.website != nil %>
+				<p>
+					Website: <%= e.website %>
+				</p>
+			<% end %>
+
+				<% if current_user.has_role?:admin %>
+					<%= link_to "Edit Event", edit_event_path(e.id) %>
+
+		  		<%= link_to "Delete Event", event_path(e.id), method: :delete %>
+		  	
+		  	<% else %>
+					<%= button_to "Show Interest" , show_interest_path(e.id) %>
+		  	<% end %>
+			<p>---------------------------------------------------</p>
+	<% end %>	
+	<% else %>
+	 	<%= link_to "sign in", new_user_session_path %>
+		<%= link_to "sign up", new_user_registration_path %>
+<% end %>	

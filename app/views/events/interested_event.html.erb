@@ -1,0 +1,37 @@
+<h1>Interested Events</h1>
+	<p>---------------------------------------------------</p>
+		<% @interested_events.each do |e| %>
+			<p>
+				Title: <%=e.title %>
+			</p>
+			
+			<p>
+				Description: <%=e.description%>
+			</p>
+			<p>
+				Date: <%=e.date.strftime("%d %b '%y") %>
+			</p>
+			
+			<p>
+				Time: <%=e.time.strftime("%l:%M %p Onwards") %>
+			</p>
+			<p>
+				Address line 1:	<%= e.event_address.address_line1  	%>
+			</p>
+			<p>
+				Address line 2: <%= e.event_address.address_line2  	%>
+			</p>
+			<p>
+				Area: <%= e.event_address.area %>
+			</p>
+			<p>
+				City: <%= e.event_address.city %>
+			</p>
+			<% if e.website != nil %>
+				<p>
+					Website: <%=e.website %>
+				</p>
+			<% end %>
+
+			<p>---------------------------------------------------</p>
+		<% end %>

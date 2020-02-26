@@ -1,0 +1,35 @@
+<h2>Event Requests</h2>
+
+<% @event_requests.each do |e| %>
+		
+			<p>
+				Title: <%= e.title %>
+			</p>
+			
+			<p>
+				Description: <%= e.description%>
+			</p>
+			<p>
+				Date: <%= e.date.strftime("%d %b '%y") %>
+			</p>
+			
+			<p>
+				Time: <%= e.time.strftime("%l:%M %p Onwards") %>
+			</p>
+			<% if e.website != nil %>
+				<p>
+					Website: <%= e.website %>
+				</p>
+			<% end %>
+<!-- 
+			<%= link_to "Edit Event", edit_event_path(e.id) %>
+
+		  <%= link_to "Delete Event", event_path(e.id), method: :delete %>
+
+ -->
+ 			<%= link_to "Accept", event_accept_path(e) %>
+ 			<%= link_to "Reject", event_reject_path(e) %>
+			<p>---------------------------------------------------</p>
+
+
+	<% end %>	
