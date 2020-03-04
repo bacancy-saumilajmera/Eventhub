@@ -7,15 +7,28 @@
 <p>
 	Description: <%= @event.description%>
 </p>
+<div style="width:400px; height:auto">
+	<%= image_tag(@event.image , style:'width:100%') if @event.image.present? %>
+</div>
 <p>
 	Date: <%= @event.date.strftime("%d %b '%y") %>
 </p>
-
 <p>
 	Time: <%= @event.time.strftime("%l:%M %p Onwards") %>
 </p>
+<p>
+	Address line 1:<%= @event.event_address.address_line1  %>
 </p>
-<% if @event.website == nil %>
+<p>
+	Address line 2:<%= @event.event_address.address_line2  	%>
+</p>
+<p>
+	Area:<%= @event.event_address.area %>
+</p>
+<p>
+	City:<%= @event.event_address.city %>
+</p>
+<% if @event.website != nil %>
 	<p>
 		Website: <%= @event.website %>
 	</p>

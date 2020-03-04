@@ -1,76 +1,50 @@
 <% if current_user %>
-		<%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-		<h1>All Upcoming Event</h1>
+		<h4>All Upcoming Events</h4>
  		
-		<%= search_form_for @search do |f| %>
-		  <%= f.label :Search %>
-  		<%= f.search_field :description_or_title_cont %>
+		<%= form_tag(root_path, method: "get") do %>
+          <%= text_field_tag :query, params[:query] %>
+          <button class="btn btn-dark" type="submit">Search</button>
+    <% end %>
+    <br/> 
 
-  		<%= f.submit %>
-		<% end %>
-
-		<p>
-		<%= link_to "Add New Event", new_event_path %>
-		</p>
-
-		<p>
-		<%= link_to "My Profile", my_event_path %>
-		</p>
-		<% if current_user.has_role?:admin %>
-			<p>	
-			<%= link_to "Event Requests", event_requests_path %>
-			</p>
-		<% else %>
-			<p>
-			<%= link_to "Interested Events", interested_event_path %>
-			</p>
-		<% end %>
-	
-		<p>---------------------------------------------------</p>
+		<p>----------------------------------------------------------------------------</p>
 		<% @event.each do |e| %>
 		
-			<p>
-				Title: <%= e.title %>
-			</p>
-			
+			<h4>
+				Event: <%= e.title %>
+			</h4>
 			<p>
 				Description: <%= e.description%>
 			</p>
-			<p>
-				Date: <%= e.date.strftime("%d %b '%y") %>
-			</p>
-			<p>
-				Time: <%= e.time.strftime("%l:%M %p Onwards") %>
-			</p>
-			<p>
-				Address line 1:	<%= e.event_address.address_line1  	%>
-			</p>
-			<p>
-				Address line 2: <%= e.event_address.address_line2  	%>
-			</p>
-			<p>
-				Area: <%= e.event_address.area %>
-			</p>
-			<p>
-				City: <%= e.event_address.city %>
-			</p>
-			<% if e.website != nil %>
-				<p>
-					Website: <%= e.website %>
-				</p>
+			<% if e.image != nil %>
+				<div style="width:400px; height:auto">
+					<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+				</div>
 			<% end %>
-
+			<table>
+				<tr>	
+					<td><p>Interests: <%= e.users.count %>&emsp;&emsp;</p></td>
+					<td><p>Comments: <%= e.comments.count %></p></td>
+				</tr>
+			</table>
 				<% if current_user.has_role?:admin %>
+					<p><%= link_to "Show Details" , show_details_path(e.id) %>
+							&emsp;&emsp;
 					<%= link_to "Edit Event", edit_event_path(e.id) %>
-
-		  		<%= link_to "Delete Event", event_path(e.id), method: :delete %>
+							&emsp;&emsp;
+		  		<%= link_to "Delete Event", event_path(e.id), method: :delete %></p>
 		  	
 		  	<% else %>
-					<%= button_to "Show Interest" , show_interest_path(e.id) %>
+		  		<table>
+		  			<tr>
+		  				<td><%= link_to "Show Details" , show_details_path(e.id) %> </td>
+							<td><%= button_to "Show Interest" , show_interest_path(e.id) %></td>
+						</tr>
+					</table>
 		  	<% end %>
-			<p>---------------------------------------------------</p>
-	<% end %>	
-	<% else %>
+			<p>----------------------------------------------------------------------------</p>
+		<% end %>	
+<% else %>
 	 	<%= link_to "sign in", new_user_session_path %>
 		<%= link_to "sign up", new_user_registration_path %>
 <% end %>	

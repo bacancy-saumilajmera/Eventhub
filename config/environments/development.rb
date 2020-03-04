@@ -35,16 +35,16 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    :user_name => 'saumilajmera2711',
-    :password => 'ajsaumil9',
-    :domain => 'yourdomain.com',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
-    :authentication => :plain,
-    :enable_starttls_auto => true   
-}
+#   config.action_mailer.delivery_method = :smtp
+#   ActionMailer::Base.smtp_settings = {
+#     :user_name => 'saumilajmera2711',
+#     :password => 'ajsaumil9',
+#     :domain => 'yourdomain.com',
+#     :address => 'smtp.sendgrid.net',
+#     :port => 587,
+#     :authentication => :plain,
+#     :enable_starttls_auto => true   
+# }
 
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
@@ -53,10 +53,22 @@ Rails.application.configure do
   #   domain: "gmail.com",
   #   authentication: "plain",
   #   enable_strttls_auto: true,
-  #   user_name: "eventhub.communication@gmail.com",
-  #   password: "ajsaumil9"
+  #   user_name: "saumil.ajmera@bacancytechnology.com",
+  #   password: "drinkw@ter"
 
   # }
+
+  config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+#EDITOR="vi" rails credentials:edit
+:user_name => "eventhub.communication@gmail.com",
+:password => "ajsaumil9",
+:domain => 'gmail.com',
+:address => 'smtp.gmail.com',
+:port => 587,
+:authentication => :plain,
+:enable_starttls_auto => true
+}
 
 
   config.action_mailer.perform_caching = false

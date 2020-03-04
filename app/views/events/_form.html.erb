@@ -36,6 +36,10 @@
 		<td><%= f.label :time %></td>
 		<td><%= f.time_field :time %></td>
 	</tr>
+	<tr>
+		<td><%= f.label :image %></td>
+		<td><%= f.file_field :image %></td>
+	</tr>
   <ul>
     <%= f.fields_for :event_address, @address do |addresses_form| %>
     

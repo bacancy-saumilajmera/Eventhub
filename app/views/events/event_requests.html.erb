@@ -1,4 +1,4 @@
-<h2>Event Requests</h2>
+<h4>Event Requests</h4>
 
 <% @event_requests.each do |e| %>
 		
@@ -9,6 +9,9 @@
 			<p>
 				Description: <%= e.description%>
 			</p>
+			<div style="width:400px; height:auto">
+			<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+			</div>
 			<p>
 				Date: <%= e.date.strftime("%d %b '%y") %>
 			</p>
@@ -21,12 +24,7 @@
 					Website: <%= e.website %>
 				</p>
 			<% end %>
-<!-- 
-			<%= link_to "Edit Event", edit_event_path(e.id) %>
-
-		  <%= link_to "Delete Event", event_path(e.id), method: :delete %>
-
- -->
+			<%= link_to "Show Details" , show_details_path(e.id) %>
  			<%= link_to "Accept", event_accept_path(e) %>
  			<%= link_to "Reject", event_reject_path(e) %>
 			<p>---------------------------------------------------</p>

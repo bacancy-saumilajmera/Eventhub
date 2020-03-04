@@ -1,0 +1,93 @@
+	<p>----------------------------------------------------------------------------</p>
+	<h4>Event:
+	<%= @event.title %>
+	</h4>
+	<p>----------------------------------------------------------------------------</p>
+	<p>
+		Description: <%= @event.description%>
+	</p>
+	<div style="width:400px; height:auto">
+		<%= image_tag(@event.image , style:'width:100%') if @event.image.present? %>
+	</div>
+	<table>
+		<tr>
+				<p>
+					<td>Date:</td> <td><%= @event.date.strftime("%d %b '%y") %></td>
+				</p>
+		</tr>
+		<tr>
+				<p>
+					<td>Time:</td> <td><%= @event.time.strftime("%l:%M %p Onwards") %></td>
+				</p>
+		</tr>
+		<tr>
+				<p>
+					<td>Address line 1:</td>	<td><%= @event.event_address.address_line1  	%></td>
+				</p>
+		</tr>
+		<tr>
+				<p>
+					<td>Address line 2:</td> <td><%= @event.event_address.address_line2  	%></td>
+				</p>
+		</tr>
+		<tr>
+				<p>
+					<td>Area:</td> <td><%= @event.event_address.area %></td>
+				</p>
+		</tr>
+		<tr>
+				<p>
+					<td>City:</td> <td><%= @event.event_address.city %></td>
+				</p>
+		</tr>
+		<tr>
+				<% if @event.website != nil %>
+					<p>
+						<td>Website:</td> <td><%= @event.website %></td>
+					</p>
+				<% end %>
+		</tr>
+
+	<% if current_user.has_role?:admin %>
+		<table>
+			<tr><br>
+				<td><%= link_to "Edit Event", edit_event_path(@event.id) %>&emsp;&emsp;</td>
+				<td><%= link_to "Delete Event", event_path(@event.id), method: :delete %></td>
+			</tr>
+		</table>
+	<% else %>
+		<table>
+		  <tr>
+				<td><%= button_to "Show Interest" , show_interest_path(@event.id) %></td>
+			</tr>
+		</table>
+	<% end %>
+	<br>
+	<h5>Comments</h5>
+	<p>----------------------------------------------------------------------------</p>
+<% @event_comments.each do |c| %>
+	<table>
+	<tr>
+		<% u = User.find(c.user_id) %>
+		<td><%= u.username %>:</td>
+		<td><%= c.comment %></td>
+		<td><div style="width:200px; height:auto">
+		<%= image_tag(c.image , style:'width:100%') if c.image.present? %>
+	</div></td>
+	</tr>
+</table>
+<br>
+<% end %>
+<p>----------------------------------------------------------------------------</p>
+<table>
+<%= form_with url: post_comment_path(@event.id) , model: @comment do |f| %>
+  <tr>
+		<td><%= f.label :comment %></td>
+		<td><%= f.text_area :comment %></td>
+		<td><%= f.file_field :image %></td>
+	</tr>
+	<tr>	
+		<td><%=f.submit "Post"%></td>
+	</tr>
+<% end %>
+</table>

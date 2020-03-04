@@ -1,8 +1,21 @@
-<h3>Interested Users</h3>
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		table, th, td {
+  border: 1px solid black;
+}
+	</style>
+</head>
+<body>
+
+
+
 <h4>Total Interested Users: <%= @interested_users.count %> </h4>
-<table>
+<%= link_to "Send Mail to All Interested Users", messages_send_path(@event) %>
+<table >
 	<tr>
-		<th>userid</th>
 		<th>username</th>
 		<th>email</th>
 	</tr>
@@ -10,7 +23,6 @@
 		
 		<p>
 			<tr>
-				<td><%= u.id %></td>
 				<td><%= u.username %></td>
 				<td><%= u.email %></td>
 			</tr>
@@ -18,3 +30,6 @@
 	
 	<% end %>
 </table>
+
+</body>
+</html>

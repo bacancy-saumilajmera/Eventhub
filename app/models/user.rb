@@ -2,10 +2,11 @@ class User < ApplicationRecord
   rolify
   has_many :interests
   has_many :events, through: :interests
+  has_many :comments
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # , :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable 
+         :recoverable, :rememberable, :validatable, :confirmable 
 
   validates :firstname, presence: true
   validates :lastname, presence: true

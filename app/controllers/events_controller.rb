@@ -20,8 +20,12 @@ def new
   end
 
   def index
-    @search = Event.ransack(params[:q])
-    @event = @search.result.where(status: "accepted")
+    if params[:query].present?
+      @event = Event.search1(params[:query]).where(status: "accepted")
+    else
+      @event = Event.where(status: "accepted")
+    @rejected_articles = Event.where("articles.user_id = ? AND articles.status = ?",current_user,"reject" )
+    end    
   end
 
   def edit
@@ -60,6 +64,7 @@ def new
 
   def interested_event
     @interested_events = current_user.events
+
    end
 
    def event_requests
@@ -89,8 +94,26 @@ def new
     @interested_users = @event.users
    end
 
+  def show_details
+    @event = Event.find(params[:id])
+    @event_comments = @event.comments
+  end
+
+  def post_comment
+    @comment = Comment.new(comment: params[:comment], image: params[:image])
+    @event = Event.find(params[:id])
+    @comment.user_id = current_user.id
+    @comment.event_id = @event.id
+    if @comment.save
+      redirect_to show_details_path(@event.id)
+    end
+  end
+
   private
   def event_params
-    params.require(:event).permit(:title, :description, :date, :time, :website ,:user_id, :category_id, :status, event_address_attributes: [:address_line1, :address_line2, :area, :city, :pincode])
+    params.require(:event).permit(:title, :description, :date, :time, :website ,:user_id, :category_id, :status, :image, event_address_attributes: [:address_line1, :address_line2, :area, :city, :pincode])
+  end
+  def comment_params
+    params.require(:comment).permit(:comment, :user_id, :event_id, :image)
   end
 end

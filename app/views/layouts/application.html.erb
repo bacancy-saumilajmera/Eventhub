@@ -9,15 +9,20 @@
   </head>
 
   <body>
- <!--    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <% flash.each do |name,msg| %>
+  <!--  <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p> -->
+<!--     <% flash.each do |name,msg| %>
     <ul>
       <li><%= msg %></li>
     </ul>
-    <% end %>   -->
+    <% end %>  --> 
+<% if current_user %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/"><h3>Eventhub</h3></a>
+  <% if current_user.has_role?:admin %>
+    <a class="navbar-brand" href="/"><h3>Eventhub:Admin Panel</h3></a>
+  <% else %>
+    <a class="navbar-brand" href="/"><h3>Eventhub</h3></a>
+  <% end %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -29,21 +34,35 @@
     <span class="navbar-text">
       <ul class="navbar-nav">
         <li class="nav-item">
-        <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="/">Dashboard <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/events/new">Add Event</a>
+        <a class="nav-link active" href="/events/new">Add Event</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/my_event">My Profile</a>
+        <a class="nav-link active" href="/my_event">My Profile</a>
       </li>
+      <% if current_user.has_role?:admin %>
+        <div class="nav-link"> 
+          <%= link_to "Event Requests", event_requests_path %>
+        </div>
+      <% else %>
+      <div class="nav-link"> 
+        <%= link_to "Interested Events", interested_event_path %>
+      </div>
+         
+      <% end %>
       <li class="nav-item">
-        <a class="nav-link" href="/users/sign_out">Logout</a>
+        <div class="nav-link">
+          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+        </div>
       </li>
       </ul> 
     </span>
   </div>
 </nav>
+<% end %>
     <%= yield %>
   </body>
 </html>
+

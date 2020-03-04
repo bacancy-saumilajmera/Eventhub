@@ -14,7 +14,7 @@ gem 'sass-rails', '>= 6'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'hirb'
-gem 'omniauth-facebook'
+gem 'rqrcode'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 gem 'cancancan'
 gem 'rolify'
-gem 'ransack'
+# gem 'ransack'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
