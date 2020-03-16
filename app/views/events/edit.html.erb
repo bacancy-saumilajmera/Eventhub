@@ -1,2 +1,4 @@
 <h4>Edit Event</h4>
+<% if @event.is_my_event?(@event.id ,current_user.id) or current_user.has_role? :admin or current_user.has_role? :super_admin%>
 <%= render 'form' %>
+<% end %>

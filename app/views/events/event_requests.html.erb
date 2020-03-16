@@ -1,33 +1,33 @@
+<% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
 <h4>Event Requests</h4>
 
 <% @event_requests.each do |e| %>
-		
-			<p>
-				Title: <%= e.title %>
-			</p>
-			
-			<p>
-				Description: <%= e.description%>
-			</p>
-			<div style="width:400px; height:auto">
-			<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
-			</div>
-			<p>
-				Date: <%= e.date.strftime("%d %b '%y") %>
-			</p>
-			
-			<p>
-				Time: <%= e.time.strftime("%l:%M %p Onwards") %>
-			</p>
-			<% if e.website != nil %>
-				<p>
-					Website: <%= e.website %>
-				</p>
-			<% end %>
-			<%= link_to "Show Details" , show_details_path(e.id) %>
- 			<%= link_to "Accept", event_accept_path(e) %>
- 			<%= link_to "Reject", event_reject_path(e) %>
-			<p>---------------------------------------------------</p>
 
+<p>
+	Title: <%= e.title %>
+</p>
 
-	<% end %>	
+<p>
+	Description: <%= e.description%>
+</p>
+<div style="width:400px; height:auto">
+	<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+</div>
+<p>
+	Date: <%= e.date.strftime("%d %b '%y") %>
+</p>
+
+<p>
+	Time: <%= e.time.strftime("%l:%M %p Onwards") %>
+</p>
+<% if e.website != nil %>
+<p>
+	Website: <%= e.website %>
+</p>
+<% end %>
+<%= link_to "Show Details" , show_details_path(e.id) %>
+<%= link_to "Accept", event_accept_path(e) %>
+<%= link_to "Reject", event_reject_path(e) %>
+<p>---------------------------------------------------</p>
+<% end %>
+<% end %>

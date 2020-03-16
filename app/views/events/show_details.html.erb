@@ -1,7 +1,9 @@
-	<p>----------------------------------------------------------------------------</p>
-	<h4>Event:
-	<%= @event.title %>
-	</h4>
+<br>
+<h4>
+	<strong>
+		<%= @event.title %>
+	</strong>
+</h4>
 	<p>----------------------------------------------------------------------------</p>
 	<p>
 		Description: <%= @event.description%>
@@ -48,7 +50,7 @@
 				<% end %>
 		</tr>
 
-	<% if current_user.has_role?:admin %>
+	<% if current_user.has_role?:admin or current_user.has_role? :super_admin %>
 		<table>
 			<tr><br>
 				<td><%= link_to "Edit Event", edit_event_path(@event.id) %>&emsp;&emsp;</td>
@@ -58,18 +60,40 @@
 	<% else %>
 		<table>
 		  <tr>
-				<td><%= button_to "Show Interest" , show_interest_path(@event.id) %></td>
+		  	<br>
+		  	<% unless @event.is_interested?(@event.id,current_user.id) && @event.is_my_event?(@event.id , current_user.id) %>
+				<td>
+					<%= form_tag(show_interest_path(@event.id), method: "post") do %>
+						<button class="btn btn-dark" type="submit">Show Interest</button>&emsp;
+    			<% end %>
+    		</td>
+    		<% else %>
+    			<td>
+    				<button class="btn btn-dark" type="submit" disabled>Interested</button>
+    				</td>
+    			<% end %>
+    			<% unless @event.is_registered?(@event.id,current_user.id) && @event.is_my_event?(@event.id , current_user.id) %>
+    				<td>
+								<%= form_tag(registration_form_path(@event.id), method: "get") do %>
+									<button class="btn btn-dark" type="submit">Register</button>
+    						<% end %>
+    				</td>
+    			<% else %>
+    				<td>
+    					<button class="btn btn-dark" type="submit" disabled>Registered</button>&emsp;
+    				</td>
+    		<% end %>
 			</tr>
 		</table>
 	<% end %>
 	<br>
-	<h5>Comments</h5>
+	<h5><strong>Comments</strong></h5>
 	<p>----------------------------------------------------------------------------</p>
 <% @event_comments.each do |c| %>
 	<table>
 	<tr>
 		<% u = User.find(c.user_id) %>
-		<td><%= u.username %>:</td>
+		<td><strong><%= u.username %>:</strong></td>
 		<td><%= c.comment %></td>
 		<td><div style="width:200px; height:auto">
 		<%= image_tag(c.image , style:'width:100%') if c.image.present? %>
@@ -79,15 +103,14 @@
 <br>
 <% end %>
 <p>----------------------------------------------------------------------------</p>
-<table>
+
 <%= form_with url: post_comment_path(@event.id) , model: @comment do |f| %>
+  <table>
   <tr>
-		<td><%= f.label :comment %></td>
+		<td><%= f.label :comment %>:</td>
 		<td><%= f.text_area :comment %></td>
 		<td><%= f.file_field :image %></td>
 	</tr>
-	<tr>	
-		<td><%=f.submit "Post"%></td>
-	</tr>
+	</table>
+	<button class="btn btn-dark" type="submit">Post Comment</button>
 <% end %>
-</table>

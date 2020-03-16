@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Message < ApplicationRecord
-  belongs_to :event 
+  belongs_to :event
   validates :message, presence: true
 
   after_create :send_message

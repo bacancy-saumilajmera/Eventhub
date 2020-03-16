@@ -1,11 +1,11 @@
 <table>
-<%= form_with url: messages_send_path , model: @message do |f| %>
-  <tr>
+	<%= form_with url: messages_send_path , model: @message do |f| %>
+	<tr>
 		<td><%= f.label :message %></td>
 		<td><%= f.text_area :message %></td>
 	</tr>
 	<tr>
 		<td><%=f.submit "Send Mail"%></td>
 	</tr>
-<% end %>
+	<% end %>
 </table>

@@ -1,89 +1,87 @@
 <html>
+
 <head></head>
+
 <body>
-<% if @event.errors.any? %>
-<ul>
-	<% @event.errors.full_messages.each do |msg| %>
-	<li> <%= msg %> </li>
+	<% if @event.errors.any? %>
+	<ul>
+		<% @event.errors.full_messages.each do |msg| %>
+		<li> <%= msg %> </li>
+		<% end %>
+	</ul>
 	<% end %>
-</ul>
-<% end %>
 
-<table>
+	<table>
 
 
-<%= form_with model: @event do |f| %>
-  <tr>
-		<td><%= f.label :title %></td>
-		<td><%= f.text_field :title %></td>
-	</tr>
-	<tr>
-		<td><%= f.label :description %></td>
-		<td><%= f.text_area :description %></td>
-	</tr>
-	<tr>
-		<td><%= f.label :category %></td>
-		
-		<td>
-			<%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: "Select Category") %>
-		</td>
-	</tr>
-	<tr>
-		<td><%= f.label :date %></td>
-		<td><%= f.date_field :date %></td>
-	</tr>
-	<tr>
-		<td><%= f.label :time %></td>
-		<td><%= f.time_field :time %></td>
-	</tr>
-	<tr>
-		<td><%= f.label :image %></td>
-		<td><%= f.file_field :image %></td>
-	</tr>
-  <ul>
-    <%= f.fields_for :event_address, @address do |addresses_form| %>
-    
-        <tr>
-					<td><%= addresses_form.label :address_line1 , "Venue Address Line 1" %></td>
-					<td><%= addresses_form.text_field :address_line1 %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :address_line2 , "Venue Address Line 2" %></td>
-					<td><%= addresses_form.text_field :address_line2 %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :area , "Venue Area"%></td>
-					<td><%= addresses_form.text_field :area %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :pincode %></td>
-					<td><%= addresses_form.text_field :pincode %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :city %></td>
-					<td><%= addresses_form.text_field :city %></td>
-				</tr>
-  			   
-    <% end %>
-  </ul>
-  <tr>
-		<td><%=f.submit "Post Event"%></td>
-	</tr>
-<% end %>
+		<%= form_with model: @event, validate: true do |f|  %>
+	
+		<tr>
+			<td><%= f.label :title %></td>
+			<td><%= f.text_field :title %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :description %></td>
+			<td><%= f.text_area :description %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :category %></td>
 
+			<td>
+				<%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: "Select Category") %>
+			</td>
+		</tr>
+		<tr>
+			<td><%= f.label :date %></td>
+			<td><%= f.date_field :date , min: Date.today %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :time %></td>
+			<td><%= f.time_field :time %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :image %></td>
+			<td><%= f.file_field :image %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :price %></td>
+			<td><%= f.text_field :price %></td>
+		</tr>
+		<tr>
+			<td><%= f.label :size %></td>
+			<td><%= f.text_field :size %></td>
+		</tr>
+		<ul>
+			<%= f.fields_for :event_address, @address do |addresses_form| %>
 
-</table>
+			<tr>
+				<td><%= addresses_form.label :address_line1 , "Venue Address Line 1" %></td>
+				<td><%= addresses_form.text_field :address_line1 %></td>
+			</tr>
+			<tr>
+				<td><%= addresses_form.label :address_line2 , "Venue Address Line 2" %></td>
+				<td><%= addresses_form.text_field :address_line2 %></td>
+			</tr>
+			<tr>
+				<td><%= addresses_form.label :area , "Venue Area"%></td>
+				<td><%= addresses_form.text_field :area %></td>
+			</tr>
+			<tr>
+				<td><%= addresses_form.label :pincode %></td>
+				<td><%= addresses_form.text_field :pincode %></td>
+			</tr>
+			<tr>
+				<td><%= addresses_form.label :city %></td>
+				<td><%= addresses_form.text_field :city %></td>
+			</tr>
 
-
-
-
-
-
+			<% end %>
+		</ul>
+		<tr>
+			<td><%=f.submit "Post Event"%></td>
+		</tr>
+		<% end %>
+	</table>
 </body>
 
-
 </html>
-
-
-
-

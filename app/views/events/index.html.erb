@@ -1,50 +1,114 @@
-<% if current_user %>
-		<h4>All Upcoming Events</h4>
- 		
-		<%= form_tag(root_path, method: "get") do %>
-          <%= text_field_tag :query, params[:query] %>
-          <button class="btn btn-dark" type="submit">Search</button>
-    <% end %>
-    <br/> 
+<!DOCTYPE html>
+<html>
 
-		<p>----------------------------------------------------------------------------</p>
-		<% @event.each do |e| %>
-		
-			<h4>
-				Event: <%= e.title %>
-			</h4>
-			<p>
-				Description: <%= e.description%>
-			</p>
-			<% if e.image != nil %>
-				<div style="width:400px; height:auto">
-					<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
-				</div>
-			<% end %>
-			<table>
-				<tr>	
-					<td><p>Interests: <%= e.users.count %>&emsp;&emsp;</p></td>
-					<td><p>Comments: <%= e.comments.count %></p></td>
-				</tr>
-			</table>
-				<% if current_user.has_role?:admin %>
-					<p><%= link_to "Show Details" , show_details_path(e.id) %>
-							&emsp;&emsp;
-					<%= link_to "Edit Event", edit_event_path(e.id) %>
-							&emsp;&emsp;
-		  		<%= link_to "Delete Event", event_path(e.id), method: :delete %></p>
-		  	
-		  	<% else %>
-		  		<table>
-		  			<tr>
-		  				<td><%= link_to "Show Details" , show_details_path(e.id) %> </td>
-							<td><%= button_to "Show Interest" , show_interest_path(e.id) %></td>
-						</tr>
-					</table>
-		  	<% end %>
-			<p>----------------------------------------------------------------------------</p>
-		<% end %>	
-<% else %>
-	 	<%= link_to "sign in", new_user_session_path %>
-		<%= link_to "sign up", new_user_registration_path %>
-<% end %>	
+<head>
+  <title></title>
+  <style type="text/css">
+
+  </style>
+</head>
+
+<body>
+  <div class="container ">
+    <div class="row">
+      <div class="col ">
+
+      </div>
+      <div class="col-9">
+        <br>
+        <% if current_user %>
+        <h3><strong>All Upcoming Events</strong></h3>
+        <%= form_tag(root_path, method: "get") do %>
+        <%= text_field_tag :query, params[:query] , :size=>"40" , placeholder: "  Search for an event by name or category"%>
+        <button class="btn btn-dark" type="submit">Search</button>
+        <% end %>
+        <br />
+
+        <p>
+          ----------------------------------------------------------------------------------------------------------------------------------------------
+        </p>
+        <% @event.each do |e| %>
+
+        <h4>
+          <strong><%= e.title %></strong>
+        </h4>
+
+
+        <p>
+          Description: <%= e.description%>
+        </p>
+        <% if e.image != nil %>
+        <div style="width:750px; height:auto">
+          <%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+        </div>
+        <% end %>
+        <table>
+          <tr>
+            <td>
+              <p>Interests: <%= e.interests.count %>&emsp;&emsp;</p>
+            </td>
+            <td>
+              <p>Comments: <%= e.comments.count %></p>
+            </td>
+          </tr>
+        </table>
+
+        <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+        <p>
+          <%= link_to "Show Details" , show_details_path(e.id) %>
+          &emsp;&emsp;
+          <%= link_to "Edit Event", edit_event_path(e.id) %>
+          &emsp;&emsp;
+          <%= link_to "Delete Event", event_path(e.id), method: :delete %>
+        </p>
+        <% else %>
+        <table>
+          <tr>
+            <td>
+              <%= form_tag(show_details_path(e.id), method: "get") do %>
+              <button class="btn btn-dark" type="submit">Show Details</button>&emsp;
+              <% end %>
+            </td>
+            <% unless e.is_interested?(e.id,current_user.id) && e.is_my_event?(e.id , current_user.id) %>
+            <td>
+              <%= form_tag(show_interest_path(e.id), method: "post") do %>
+              <button class="btn btn-dark" type="submit">Show Interest</button>&emsp;
+              <% end %>
+            </td>
+            <% else %>
+            <td>
+              <button class="btn btn-dark" type="submit" disabled>Interested</button>&emsp;
+            </td>
+            <% end %>
+            <% unless e.is_registered?(e.id,current_user.id) && e.is_my_event?(e.id , current_user.id) %>
+            <td>
+              <%= form_tag(registration_form_path(e.id), method: "get") do %>
+              <button class="btn btn-dark" type="submit">Register</button>
+              <% end %>
+            </td>
+            <% else %>
+            <td>
+              <button class="btn btn-dark" type="submit" disabled>Registered</button>&emsp;
+            </td>
+            <% end %>
+          </tr>
+        </table>
+        <% end %>
+        <br><br>
+        <p>
+          ----------------------------------------------------------------------------------------------------------------------------------------------
+        </p>
+        <% end %>
+        <% else %>
+        <%= link_to "sign in", new_user_session_path %>
+        <%= link_to "sign up", new_user_registration_path %>
+        <% end %>
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

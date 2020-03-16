@@ -1,68 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Eventhub</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
 
-  <body>
-  <!--  <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p> -->
-<!--     <% flash.each do |name,msg| %>
-    <ul>
-      <li><%= msg %></li>
-    </ul>
-    <% end %>  --> 
-<% if current_user %>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <% if current_user.has_role?:admin %>
-    <a class="navbar-brand" href="/"><h3>Eventhub:Admin Panel</h3></a>
-  <% else %>
-    <a class="navbar-brand" href="/"><h3>Eventhub</h3></a>
+<head>
+  <title>Eventhub</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+ 
+  <% if current_user %>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <% if current_user.has_role? :super_admin %>
+    <a class="navbar-brand" href="/">
+      <h3>Eventhub::Super-Admin Panel</h3>
+    </a>
+    <% elsif current_user.has_role? :admin %>
+    <a class="navbar-brand" href="/">
+      <h3>Eventhub::Admin Panel</h3>
+    </a>
+    <% else %>
+    <a class="navbar-brand " href="/">
+      <h3><strong>Eventhub</strong></h3>
+    </a>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+
+
+      </ul>
+      <span class="navbar-text">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+          <% if current_user.has_role? :super_admin %>
+          <div class="nav-link">
+            <%= link_to "All Users", all_users_path %>
+          </div>
+          <% end %>
+          <li class="nav-item">
+            <a class="nav-link active" href="/events/new">Add Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/my_event">My Profile</a>
+          </li>
+          <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+          <div class="nav-link">
+            <%= link_to "Event Requests", event_requests_path %>
+          </div>
+          <% else %>
+          <div class="nav-link">
+            <%= link_to "Registered Events", registered_events_path %>
+          </div>
+          <% end %>
+          <% if current_user.has_role? :user %>
+          <li class="nav-item">
+            <div class="nav-link">
+              <%= link_to "Notification(#{pending_notification})", notification_path  %>
+            </div>
+          </li>
+          <% end %>
+          <li class="nav-item">
+            <div class="nav-link">
+              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            </div>
+          </li>
+        </ul>
+      </span>
+    </div>
+  </nav>
   <% end %>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      
+  <%= yield %>
+</body>
 
-    </ul>
-    <span class="navbar-text">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-        <a class="nav-link active" href="/">Dashboard <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/events/new">Add Event</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" href="/my_event">My Profile</a>
-      </li>
-      <% if current_user.has_role?:admin %>
-        <div class="nav-link"> 
-          <%= link_to "Event Requests", event_requests_path %>
-        </div>
-      <% else %>
-      <div class="nav-link"> 
-        <%= link_to "Interested Events", interested_event_path %>
-      </div>
-         
-      <% end %>
-      <li class="nav-item">
-        <div class="nav-link">
-          <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-        </div>
-      </li>
-      </ul> 
-    </span>
-  </div>
-</nav>
-<% end %>
-    <%= yield %>
-  </body>
 </html>
-
