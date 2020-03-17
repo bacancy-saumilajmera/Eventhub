@@ -1,6 +1,7 @@
 <h4><strong>Registered Events</strong></h4>
 <p>-------------------------------------------------------------------------------------</p>
 <% @registered_event.each do |e| %>
+<% if is_status_true?(@registered_event) %>
 <h5>
 	<strong>
 		<%=e.title %>
@@ -13,12 +14,12 @@
 <% end %><br>
 <table>
 	<tr>
-		<td><%= form_tag(show_details_path(e.id), method: "get") do %>
-			<button class="btn btn-dark" type="submit">Show Details</button>&emsp;
+		<td><%= form_tag(show_details_path(e.id), method: :get) do %>
+			<button class="btn btn-dark" type='submit'>Show Details</button>&emsp;
 			<% end %>
-		</td>		
-		<td><%= form_tag(receipt_path(e.id), method: "get") do %>
-			<button class="btn btn-dark" type="submit">Receipt</button>&emsp;
+		</td>
+		<td><%= form_tag(receipt_path(e.id), method: :get) do %>
+			<button class="btn btn-dark" type='submit'>Receipt</button>&emsp;
 			<% end %>
 		</td>
 		<td>
@@ -29,4 +30,4 @@
 
 <p>-----------------------------------------------------------------------------------</p>
 <% end %>
-
+<% end %>

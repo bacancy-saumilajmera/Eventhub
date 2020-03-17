@@ -6,8 +6,8 @@
 </h4>
 <p>-------------------------------------------------------------------------------------</p>
 <% if @event.image != nil %>
-<div style="width:450px; height:auto">
-	<%= image_tag(@event.image , style:'width:100%') if @event.image.present? %>
+<div style = 'width:450px; height:auto'>
+	<%= image_tag(@event.image , style: 'width:100%') if @event.image.present? %>
 </div>
 <% end %>
 <p>-------------------------------------------------------------------------------------</p>
@@ -18,7 +18,7 @@
 			Name:
 		</td>
 		<td>
-			<%= current_user.firstname%>
+			<%= current_user.firstname %>
 			<%= current_user.lastname %>
 		</td>
 	</tr>
@@ -27,7 +27,7 @@
 			Email
 		</td>
 		<td>
-			<%= current_user.email%>
+			<%= current_user.email %>
 		</td>
 	</tr>
 	<tr>
@@ -43,7 +43,7 @@
 			Total amount:
 		</td>
 		<td>
-			<%= @registration[0].total_amount%>
+			<%= @registration[0].total_amount %>
 		</td>
 	</tr>
 </table>
@@ -59,7 +59,7 @@
 	<tr>
 		<td>Time:</td>
 		<td>
-			<%= @event.time.strftime("%l:%M %p Onwards") %>
+			<%= @event.time.strftime('%l:%M %p Onwards') %>
 		</td>
 	</tr>
 	<tr>
@@ -80,5 +80,4 @@
 			<%= @event.event_address.area %>,<%= @event.event_address.city %>.
 		</td>
 	</tr>
-
 </table>

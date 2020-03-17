@@ -3,6 +3,7 @@
 class Registration < ApplicationRecord
   belongs_to :user
   belongs_to :event
+  validates_uniqueness_of :user_id, scope: :event_id
   after_create :registration_mail, :registration_notification
   def registration_mail
     RegistrationMailer.registration_done(self).deliver

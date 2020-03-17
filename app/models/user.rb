@@ -12,11 +12,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  validates :firstname, presence: true
-  validates :lastname, presence: true
-  validates :username, presence: true
-  validates :contact_no, presence: true
-  validates :password, presence: true
+  validates :firstname, :password, :contact_no, :username, :lastname, presence: true
 
   def is_admin?(user_id)
     user = User.find(user_id)

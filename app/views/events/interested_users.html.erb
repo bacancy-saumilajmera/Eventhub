@@ -1,41 +1,28 @@
-<!DOCTYPE html>
-<html>
+<style type="text/css">
+	table,
+	th,
+	td {
+		border: 1px solid black;
+	}
+</style>
+<% if @event.is_my_event?(@event.id ,current_user.id) %>
 
-<head>
-	<title></title>
-	<style type="text/css">
-		table,
-		th,
-		td {
-			border: 1px solid black;
-		}
-	</style>
-</head>
+<h4>Total Interested Users: <%= @event.interests.count %> </h4>
+<%= link_to 'Send Mail to All Interested Users', messages_send_path(@event) %>
+<table>
+	<tr>
+		<th>username</th>
+		<th>email</th>
+	</tr>
+	<% @interested_users.each do |u| %>
 
-<body>
-
-	<% if @event.is_my_event?(@event.id ,current_user.id )%>
-
-	<h4>Total Interested Users: <%= @event.interests.count %> </h4>
-	<%= link_to "Send Mail to All Interested Users", messages_send_path(@event) %>
-	<table>
+	<p>
 		<tr>
-			<th>username</th>
-			<th>email</th>
+			<td><%= u.username %></td>
+			<td><%= u.email %></td>
 		</tr>
-		<% @interested_users.each do |u| %>
+	</p>
 
-		<p>
-			<tr>
-				<td><%= u.username %></td>
-				<td><%= u.email %></td>
-			</tr>
-		</p>
-
-		<% end %>
-	</table>
-
-</body>
-
-</html>
+	<% end %>
+</table>
 <% end %>

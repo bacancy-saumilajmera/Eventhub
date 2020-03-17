@@ -6,11 +6,14 @@ class RegisteredMessagesController < ApplicationController
   end
 
   def create
-    binding.pry
     @event = Event.find(params[:id])
-    @message = RegisteredMessage.new(message: params[:registered_message][:message], event_id: @event.id)
+    @message = RegisteredMessage.new(message_params)
+    @message.event_id = @event.id
     if @message.save
       flash[:notice] = 'Mail Sent'
+      redirect_to my_event_path
+    else
+      flash[:notice] = 'Mail not Sent'
       redirect_to my_event_path
     end
   end
@@ -18,6 +21,6 @@ class RegisteredMessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:message, :event_id)
+    params.require(:registered_message).permit(:message, :event_id)
   end
 end

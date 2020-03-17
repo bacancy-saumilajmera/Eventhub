@@ -8,26 +8,26 @@
 </p>
 
 <p>
-	Description: <%= e.description%>
+	Description: <%= e.description %>
 </p>
-<div style="width:400px; height:auto">
+<div style='width:400px; height:auto'>
 	<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
 </div>
 <p>
-	Date: <%= e.date.strftime("%d %b '%y") %>
+	Date: <%= e.date.strftime(''%d %b '%y') %>
 </p>
 
 <p>
-	Time: <%= e.time.strftime("%l:%M %p Onwards") %>
+	Time: <%= e.time.strftime('%l:%M %p Onwards') %>
 </p>
 <% if e.website != nil %>
 <p>
 	Website: <%= e.website %>
 </p>
 <% end %>
-<%= link_to "Show Details" , show_details_path(e.id) %>
-<%= link_to "Accept", event_accept_path(e) %>
-<%= link_to "Reject", event_reject_path(e) %>
+<%= link_to 'Show Details' , show_details_path(e.id) %>
+<%= link_to 'Accept', event_accept_path(e) %>
+<%= link_to 'Reject', event_reject_path(e) %>
 <p>---------------------------------------------------</p>
 <% end %>
 <% end %>

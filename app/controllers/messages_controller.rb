@@ -7,9 +7,13 @@ class MessagesController < ApplicationController
 
   def create
     @event = Event.find(params[:id])
-    @message = Message.new(message_params.merge(event_id: @event.id))
+    @message = Message.new(message_params)
+    @message.event_id = @event.id
     if @message.save
       flash[:notice] = 'Mail Sent'
+      redirect_to my_event_path
+    else
+      flash[:notice] = 'Mail not Sent'
       redirect_to my_event_path
     end
   end
