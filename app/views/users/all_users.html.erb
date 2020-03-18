@@ -1,0 +1,48 @@
+<% if current_user.roles[0].name == 'super_admin' %>
+<style type = 'text/css'>
+  th,
+  td {
+    padding: 15px;
+  }
+</style>
+<table>
+  <tr>
+    <th>User ID</th>
+    <th>Username</th>
+    <th>Email</th>
+  </tr>
+  <% @user.each do |u| %>
+  <% if u.has_role? :super_admin%>
+  <% next %>
+  <% end %>
+  <tr>
+    <td><%= u.id %></td>
+    <td><%= u.username %></td>
+    <td><%= u.email %></td>
+    <% unless u.is_admin?(u.id) %>
+    <td>
+      <%= form_tag(add_role_admin_path(u.id), method: :get) do %>
+      <button class = 'btn btn-dark' type = 'submit'>Make Admin</button>&emsp;
+      <% end %>
+    </td>
+    <td>
+      <%= form_tag(remove_role_admin_path(u.id), method: :get) do %>
+      <button class = 'btn btn-dark' type = 'submit' disabled>Remove Admin</button>&emsp;
+      <% end %>
+    </td>
+    <% else %>
+    <td>
+      <%= form_tag(add_role_admin_path(u.id), method: :get) do %>
+      <button class = 'btn btn-dark' type = 'submit' disabled>Make Admin</button>&emsp;
+      <% end %>
+    </td>
+    <td>
+      <%= form_tag(remove_role_admin_path(u.id), method: :get) do %>
+      <button class = 'btn btn-dark' type = 'submit'>Remove Admin</button>&emsp;
+      <% end %>
+    </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+<% end %>

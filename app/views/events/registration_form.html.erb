@@ -1,0 +1,20 @@
+<h4><strong>Registration Form</strong></h4>
+<%= form_with scope: :register, url: register_path(@event.id) ,method: :post do |f| %>
+<table>
+	<tr>
+		<td><%= f.label :Event %>:</td>
+		<td><%= @event.title %></td>
+	</tr>
+	<tr>
+		<td><%= f.label :quantity %>:</td>
+		<td>
+			<%= f.select(:quantity, 1..10) %>
+		</td>
+	</tr>
+	<tr>
+		<td><%= f.label :price %>:</td>
+		<td><%= @event.price %> rs. per ticket</td>
+	</tr>
+</table>
+<button class="btn btn-dark" type='submit'>Register</button>
+<% end %>

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     @event = Event.all
-    return events_path(@event)
+    events_path(@event)
   end
 
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -12,6 +14,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[firstname lastname username contact_no])
     devise_parameter_sanitizer.permit(:account_update, keys: %i[firstname lastname username contact_no])
   end
-
-   
 end

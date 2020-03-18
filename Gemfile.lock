@@ -58,6 +58,7 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.0)
     autoprefixer-rails (9.7.4)
       execjs
     bcrypt (3.1.13)
@@ -79,7 +80,13 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    character_set (1.4.0)
     childprocess (3.0.0)
+    chronic (0.10.2)
+    client_side_validations (16.1.0)
+      jquery-rails (~> 4.3)
+      js_regex (~> 3.1)
+      rails (>= 5.0.0.1, < 6.1)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
@@ -91,22 +98,24 @@ GEM
       warden (~> 1.2.3)
     erubi (1.9.0)
     execjs (2.7.0)
-    faraday (1.0.0)
-      multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    hashie (3.6.0)
     hirb (0.7.3)
+    htmlbeautifier (1.3.1)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.4)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
-    jwt (2.2.1)
+    js_regex (3.5.0)
+      character_set (~> 1.4)
+      regexp_parser (~> 1.6)
+      regexp_property_values (~> 1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -124,29 +133,13 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.0)
     msgpack (1.3.3)
-    multi_json (1.14.1)
-    multi_xml (0.6.0)
-    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
-    oauth2 (1.4.4)
-      faraday (>= 0.8, < 2.0)
-      jwt (>= 1.0, < 3.0)
-      multi_json (~> 1.3)
-      multi_xml (~> 0.5)
-      rack (>= 1.2, < 3)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
-      rack (>= 1.6.2, < 3)
-    omniauth-facebook (6.0.0)
-      omniauth-oauth2 (~> 1.2)
-    omniauth-oauth2 (1.6.0)
-      oauth2 (~> 1.1)
-      omniauth (~> 1.9)
     orm_adapter (0.5.0)
-    polyamorous (2.3.2)
-      activerecord (>= 5.2.1)
+    parallel (1.19.1)
+    parser (2.7.0.4)
+      ast (~> 2.4.0)
     popper_js (1.16.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -189,20 +182,28 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
+    rainbow (3.0.0)
     rake (13.0.1)
-    ransack (2.3.2)
-      activerecord (>= 5.2.1)
-      activesupport (>= 5.2.1)
-      i18n
-      polyamorous (= 2.3.2)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (1.6.0)
+    regexp_property_values (1.0.0)
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.4)
     rolify (5.2.0)
+    rqrcode (0.4.2)
+    rubocop (0.80.1)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      rexml
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 1.7)
+    ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
     rubyzip (2.2.0)
     sass-rails (6.0.0)
@@ -230,6 +231,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stripe (5.17.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -238,6 +240,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
+    unicode-display_width (1.6.1)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (4.0.1)
@@ -256,6 +259,11 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
+    wicked_pdf (2.0.1)
+      activesupport
+    wkhtmltopdf-binary (0.12.5.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.2.2)
@@ -269,28 +277,34 @@ DEPENDENCIES
   byebug
   cancancan
   capybara (>= 2.15)
+  client_side_validations
   devise
   hirb
+  htmlbeautifier
   jbuilder (~> 2.7)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
-  omniauth-facebook
   pry-nav
   pry-rails
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.1)
-  ransack
   rolify
+  rqrcode
+  rubocop (~> 0.80.1)
   sass-rails (>= 6)
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3 (~> 1.4)
+  stripe
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
+  whenever
+  wicked_pdf
+  wkhtmltopdf-binary
 
 RUBY VERSION
    ruby 2.6.3p62
