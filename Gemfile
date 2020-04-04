@@ -35,8 +35,9 @@ gem 'rubocop', '~> 0.80.1', require: false
 gem 'whenever', require: false
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
-gem 'client_side_validations'
 gem 'stripe'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 # gem 'ransack'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

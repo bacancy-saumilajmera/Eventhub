@@ -5,10 +5,9 @@ class ChargesController < ApplicationController
   end
   
   def create
-    # Amount in cents
-    @registration = Registration.where(event_id: params[:id], user_id: current_user.id)
-    @amount = @registration[0][:total_amount]
-    @registration[0].update(status: true)
+    @registration = Registration.find_by(event_id: params[:id], user_id: current_user.id)
+    @amount = @registration[:total_amount]
+    @registration.update(status: true)
     customer = Stripe::Customer.create({
       email: params[:stripeEmail],
       source: params[:stripeToken]})

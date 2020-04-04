@@ -14,4 +14,9 @@ class Registration < ApplicationRecord
     event = Event.find(e)
     Notification.create(user_id: user_id, notification_message: "Thank You for Registring yourself in #{event.title}. You can Download Your Ticket from Regsitered Events Page ", status: false)
   end
+
+  def self.delete_record
+  records = Registration.where(status: false).where("created_at < ?" ,Time.now - 180)
+  records.destroy_all
+  end
 end

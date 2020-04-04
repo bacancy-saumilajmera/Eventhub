@@ -1,33 +1,35 @@
-<% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+<% if can_respond_requests? %>
 <h4>Event Requests</h4>
 
-<% @event_requests.each do |e| %>
+<% @event_requests.each do |event| %>
 
 <p>
-	Title: <%= e.title %>
+	Title: <%= event.title %>
 </p>
 
 <p>
-	Description: <%= e.description %>
+	Description: <%= event.description %>
 </p>
 <div style='width:400px; height:auto'>
-	<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+	<%= image_tag(event.image , style:'width:100%') if event.image.present? %>
 </div>
 <p>
-	Date: <%= e.date.strftime(''%d %b '%y') %>
+	Date: <%= event.date.strftime("%d %b '%y") %>
 </p>
 
 <p>
-	Time: <%= e.time.strftime('%l:%M %p Onwards') %>
+	Time: <%= event.time.strftime('%l:%M %p Onwards') %>
 </p>
-<% if e.website != nil %>
+<% if event.website != nil %>
 <p>
-	Website: <%= e.website %>
+	Website: <%= event.website %>
 </p>
 <% end %>
-<%= link_to 'Show Details' , show_details_path(e.id) %>
+<%= link_to 'Show Details' , show_details_path(event.id) %>
 <%= link_to 'Accept', event_accept_path(e) %>
 <%= link_to 'Reject', event_reject_path(e) %>
 <p>---------------------------------------------------</p>
 <% end %>
+<% else %>
+<h4>You Can't access this Page </h4>
 <% end %>

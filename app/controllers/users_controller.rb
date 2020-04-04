@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   def all_users
-    @user = User.all
+    @users = User.all
   end
 
   def add_admin_role

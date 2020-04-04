@@ -15,7 +15,7 @@ class Event < ApplicationRecord
   belongs_to :user
   belongs_to :category
 
-  scope :search1, ->(s) { Event.joins(:category).where('title LIKE ? OR description LIKE ? OR category_name LIKE ? ', "%#{s}%", "%#{s}%", "%#{s}%").where(status: 'accepted') }
+  scope :search1, ->(s) { Event.joins(:category).where('title LIKE ? OR description LIKE ? OR category_name LIKE ? ', "%#{s}%", "%#{s}%", "%#{s}%").where(status: 'accepted').order(created_at: :desc) }
 
   accepts_nested_attributes_for :event_address, allow_destroy: true, reject_if: :all_blank
 

@@ -57,7 +57,7 @@
 		<% end %>
 	</tr>
 
-	<% if current_user.has_role?:admin or current_user.has_role? :super_admin %>
+	<% if can? :update, @event %>
 	<table>
 		<tr><br>
 			<td><%= link_to 'Edit Event', edit_event_path(@event.id) %>&emsp;&emsp;</td>
@@ -96,15 +96,15 @@
 	<br>
 	<h5><strong>Comments</strong></h5>
 	<p>----------------------------------------------------------------------------</p>
-	<% @event_comments.each do |c| %>
+	<% @event_comments.each do |comment| %>
 	<table>
 		<tr>
-			<% u = User.find(c.user_id) %>
-			<td><strong><%= u.username %>:</strong></td>
-			<td><%= c.comment %></td>
+			<% u = User.find(comment.user_id) %>
+			<td><strong><%= u.name %>:</strong></td>
+			<td><%= comment.comment %></td>
 			<td>
 				<div style = 'width:200px; height:auto'>
-					<%= image_tag(c.image , style:'width:100%') if c.image.present? %>
+					<%= image_tag(comment.image , style:'width:100%') if comment.image.present? %>
 				</div>
 			</td>
 		</tr>

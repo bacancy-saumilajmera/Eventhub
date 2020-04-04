@@ -292,6 +292,9 @@ Devise.setup do |config|
   #   include Turbolinks::Controller
   # end
 
+  config.omniauth :facebook, "2456037804647179", "fe5cea26c795f33e4f413b1cf6878fe9", callback_url: "http://localhost:3000/users/auth/facebook/callback"
+  config.omniauth :google_oauth2, Rails.application.credentials.dig(:google, :google_client_id),
+  Rails.application.credentials.dig(:google, :google_client_secret)
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is

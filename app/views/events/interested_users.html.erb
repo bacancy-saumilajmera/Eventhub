@@ -14,12 +14,12 @@
 		<th>username</th>
 		<th>email</th>
 	</tr>
-	<% @interested_users.each do |u| %>
+	<% @interested_users.each do |users| %>
 
 	<p>
 		<tr>
-			<td><%= u.username %></td>
-			<td><%= u.email %></td>
+			<td><%= users.username %></td>
+			<td><%= users.email %></td>
 		</tr>
 	</p>
 

@@ -7,45 +7,45 @@
 <% end %>
 
 <table>
-	<%= form_with model: @event, validate: true do |f|  %>
+	<%= form_with model: @event do |form|  %>
 
 	<tr>
-		<td><%= f.label :title %></td>
-		<td><%= f.text_field :title %></td>
+		<td><%= form.label :title %></td>
+		<td><%= form.text_field :title %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :description %></td>
-		<td><%= f.text_area :description %></td>
+		<td><%= form.label :description %></td>
+		<td><%= form.text_area :description %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :category %></td>
+		<td><%= form.label :category %></td>
 
 		<td>
-			<%= f.select(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: 'Select Category') %>
+			<%= form.select(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: 'Select Category') %>
 		</td>
 	</tr>
 	<tr>
-		<td><%= f.label :date %></td>
-		<td><%= f.date_field :date , min: Date.today %></td>
+		<td><%= form.label :date %></td>
+		<td><%= form.date_field :date , min: Date.today %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :time %></td>
-		<td><%= f.time_field :time %></td>
+		<td><%= form.label :time %></td>
+		<td><%= form.time_field :time %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :image %></td>
-		<td><%= f.file_field :image %></td>
+		<td><%= form.label :image %></td>
+		<td><%= form.file_field :image %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :price %></td>
-		<td><%= f.text_field :price %></td>
+		<td><%= form.label :price %></td>
+		<td><%= form.text_field :price %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :size %></td>
-		<td><%= f.text_field :size %></td>
+		<td><%= form.label :size %></td>
+		<td><%= form.text_field :size %></td>
 	</tr>
 	<ul>
-		<%= f.fields_for :event_address, @address do |addresses_form| %>
+		<%= form.fields_for :event_address, @address do |addresses_form| %>
 
 		<tr>
 			<td><%= addresses_form.label :address_line1 , 'Venue Address Line 1' %></td>
@@ -71,7 +71,7 @@
 		<% end %>
 	</ul>
 	<tr>
-		<td><%=f.submit 'Post Event'%></td>
+		<td><%=form.submit 'Post Event'%></td>
 	</tr>
 	<% end %>
 </table>

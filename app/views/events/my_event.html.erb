@@ -1,43 +1,40 @@
 <h4><strong>Personal Details</strong></h4>
 <p>---------------------------------------------------</p>
-First Name : <%= current_user.firstname %> <br>
-Last Name : <%= current_user.lastname %> <br>
-Username : <%= current_user.username %> <br>
-Contact No : <%= current_user.contact_no %> <br>
-Email : <%= current_user.email %><br>
+Name : <%= @user.name %> <br>
+Email : <%= @user.email %><br>
 <%= link_to 'Edit Profile', edit_user_registration_path %>
 <br>
 <br>
 <br>
 <h4><strong>My Events</strong></h4>
 <p>---------------------------------------------------</p>
-<% @events.each do |e| %>
+<% @events.each do |event| %>
 <p>
-	Title: <%= e.title %>
+	Title: <%= event.title %>
 </p>
 <p>
-	Description: <%= e.description %>
+	Description: <%= event.description %>
 </p>
 <div style="width:400px; height:auto">
-	<%= image_tag(e.image , style:'width:100%') %>
+	<%= image_tag(event.image , style:'width:100%') %>
 </div>
 <p>
-	Date: <%= e.date.strftime("%d %b '%y") %>
+	Date: <%= event.date.strftime("%d %b '%y") %>
 </p>
 <p>
-	Time: <%= e.time.strftime('%l:%M %p Onwards') %>
+	Time: <%= event.time.strftime('%l:%M %p Onwards') %>
 </p>
-<% if e.website != nil %>
+<% if event.website != nil %>
 <p>
-	Website: <%= e.website %>
+	Website: <%= event.website %>
 </p>
 <% end %>
 <p>
-	Status: <%= e.status %>
+	Status: <%= event.status %>
 </p>
-<%= link_to 'Edit Event', edit_event_path(e.id) %><br>
-<%= link_to 'Delete Event', event_path(e.id), method: :delete %><br>
-<%= link_to 'Interested Users', interested_users_path(e.id) %><br>
-<%= link_to 'Registered Users', registered_users_path(e.id) %>
+<%= link_to 'Edit Event', edit_event_path(event.id) %><br>
+<%= link_to 'Delete Event', event_path(event.id), method: :delete %><br>
+<%= link_to 'Interested Users', interested_users_path(event.id) %><br>
+<%= link_to 'Registered Users', registered_users_path(event.id) %>
 	<p>---------------------------------------------------</p>
 <% end %>

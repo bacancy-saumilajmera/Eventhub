@@ -1,29 +1,29 @@
 <h4><strong>Registered Events</strong></h4>
 <p>-------------------------------------------------------------------------------------</p>
-<% @registered_event.each do |e| %>
-<% if is_status_true?(@registered_event) %>
+<% @registered_events.each do |event| %>
+<% if is_status_true?(event) %>
 <h5>
 	<strong>
-		<%=e.title %>
+		<%=event.title %>
 	</strong>
 </h5><br>
-<% if e.image != nil %>
+<% if event.image != nil %>
 <div style="width:450px; height:auto">
-	<%= image_tag(e.image , style:'width:100%') if e.image.present? %>
+	<%= image_tag(event.image , style:'width:100%') if event.image.present? %>
 </div>
 <% end %><br>
 <table>
 	<tr>
-		<td><%= form_tag(show_details_path(e.id), method: :get) do %>
+		<td><%= form_tag(show_details_path(event.id), method: :get) do %>
 			<button class="btn btn-dark" type='submit'>Show Details</button>&emsp;
 			<% end %>
 		</td>
-		<td><%= form_tag(receipt_path(e.id), method: :get) do %>
+		<td><%= form_tag(receipt_path(event.id), method: :get) do %>
 			<button class="btn btn-dark" type='submit'>Receipt</button>&emsp;
 			<% end %>
 		</td>
 		<td>
-			<%= link_to 'Download Receipt', receipt_path(e.id, :format => :pdf) %>
+			<%= link_to 'Download Receipt', receipt_path(event.id, :format => :pdf) %>
 		</td>
 	</tr>
 </table>

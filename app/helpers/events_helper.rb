@@ -6,8 +6,10 @@ module EventsHelper
   end
 
   def is_status_true?(arg1)
-    @arg = arg1[0]
-    @registered_event = Registration.where(event_id: @arg.id , user_id: current_user.id).first.status
+    Registration.find_by(event_id: arg1.id , user_id: current_user.id).status
   end
-
+  
+  def can_respond_requests?
+    !current_user.has_role? :user
+  end
 end

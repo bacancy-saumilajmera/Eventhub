@@ -12,7 +12,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.user_id = current_user.id
     if @event.save
-      flash[:notice] = 'Event Posted'
+      flash.now[:alert] = 'Event Posted'
       redirect_to event_path(@event.id)
     else
       flash[:notice] = 'Event not Posted'
@@ -22,9 +22,12 @@ class EventsController < ApplicationController
 
   def index
     if params[:query].present?
-      @event = Event.search1(params[:query]).order(created_at: :desc)
+      @events = Event.search1(params[:query])
+      respond_to do |format|
+        format.js
+      end
     else
-      @event = Event.order(created_at: :desc)
+      @events = Event.order(created_at: :desc).where(status: 'accepted')
     end
   end
 
@@ -53,6 +56,7 @@ class EventsController < ApplicationController
 
   def my_event
     @events = Event.where(user_id: current_user.id)
+    @user = current_user
   end
 
   def show_interest
@@ -63,7 +67,7 @@ class EventsController < ApplicationController
   end
 
   def registered_events
-    @registered_event = current_user.events
+    @registered_events = current_user.events
   end
 
   def event_requests
@@ -77,6 +81,7 @@ class EventsController < ApplicationController
       redirect_to event_requests_path(@event), notice: 'test'
     else
       flash[:notice] = 'Event not Accepted'
+      redirect_to event_requests_path(@event)
     end
   end
 
@@ -87,6 +92,7 @@ class EventsController < ApplicationController
       redirect_to event_requests_path(@event)
     else
       flash[:notice] = 'Event not Rejected'
+      redirect_to event_requests_path(@event)
     end
   end
 
@@ -132,7 +138,8 @@ class EventsController < ApplicationController
   end
 
   def show_receipt
-    @registration = Registration.where(event_id: @event.id, user_id: current_user.id)
+    @registration = Registration.find_by(event_id: @event.id, user_id: current_user.id)
+    @user = current_user
     respond_to do |format|
       format.html
       format.pdf {

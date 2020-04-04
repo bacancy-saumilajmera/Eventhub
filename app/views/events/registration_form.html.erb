@@ -1,18 +1,18 @@
 <h4><strong>Registration Form</strong></h4>
-<%= form_with scope: :register, url: register_path(@event.id) ,method: :post do |f| %>
+<%= form_with scope: :register, url: register_path(@event.id) ,method: :post do |form| %>
 <table>
 	<tr>
-		<td><%= f.label :Event %>:</td>
+		<td><%= form.label :Event %>:</td>
 		<td><%= @event.title %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :quantity %>:</td>
+		<td><%= form.label :quantity %>:</td>
 		<td>
-			<%= f.select(:quantity, 1..10) %>
+			<%= form.select(:quantity, 1..10) %>
 		</td>
 	</tr>
 	<tr>
-		<td><%= f.label :price %>:</td>
+		<td><%= form.label :price %>:</td>
 		<td><%= @event.price %> rs. per ticket</td>
 	</tr>
 </table>
