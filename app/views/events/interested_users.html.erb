@@ -1,20 +1,28 @@
-<h3>Interested Users</h3>
-<h4>Total Interested Users: <%= @interested_users.count %> </h4>
+<style type="text/css">
+	table,
+	th,
+	td {
+		border: 1px solid black;
+	}
+</style>
+<% if @event.is_my_event?(@event.id ,current_user.id) %>
+
+<h4>Total Interested Users: <%= @event.interests.count %> </h4>
+<%= link_to 'Send Mail to All Interested Users', messages_send_path(@event) %>
 <table>
 	<tr>
-		<th>userid</th>
 		<th>username</th>
 		<th>email</th>
 	</tr>
-	<% @interested_users.each do |u| %>
-		
-		<p>
-			<tr>
-				<td><%= u.id %></td>
-				<td><%= u.username %></td>
-				<td><%= u.email %></td>
-			</tr>
-		</p>
-	
+	<% @interested_users.each do |users| %>
+
+	<p>
+		<tr>
+			<td><%= users.username %></td>
+			<td><%= users.email %></td>
+		</tr>
+	</p>
+
 	<% end %>
 </table>
+<% end %>

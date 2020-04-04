@@ -1,6 +1,3 @@
-<html>
-<head></head>
-<body>
 <% if @event.errors.any? %>
 <ul>
 	<% @event.errors.full_messages.each do |msg| %>
@@ -10,76 +7,71 @@
 <% end %>
 
 <table>
+	<%= form_with model: @event do |form|  %>
 
-
-<%= form_with model: @event do |f| %>
-  <tr>
-		<td><%= f.label :title %></td>
-		<td><%= f.text_field :title %></td>
+	<tr>
+		<td><%= form.label :title %></td>
+		<td><%= form.text_field :title %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :description %></td>
-		<td><%= f.text_area :description %></td>
+		<td><%= form.label :description %></td>
+		<td><%= form.text_area :description %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :category %></td>
-		
+		<td><%= form.label :category %></td>
+
 		<td>
-			<%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: "Select Category") %>
+			<%= form.select(:category_id, options_from_collection_for_select(Category.all, :id, :category_name), include_blank: 'Select Category') %>
 		</td>
 	</tr>
 	<tr>
-		<td><%= f.label :date %></td>
-		<td><%= f.date_field :date %></td>
+		<td><%= form.label :date %></td>
+		<td><%= form.date_field :date , min: Date.today %></td>
 	</tr>
 	<tr>
-		<td><%= f.label :time %></td>
-		<td><%= f.time_field :time %></td>
+		<td><%= form.label :time %></td>
+		<td><%= form.time_field :time %></td>
 	</tr>
-  <ul>
-    <%= f.fields_for :event_address, @address do |addresses_form| %>
-    
-        <tr>
-					<td><%= addresses_form.label :address_line1 , "Venue Address Line 1" %></td>
-					<td><%= addresses_form.text_field :address_line1 %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :address_line2 , "Venue Address Line 2" %></td>
-					<td><%= addresses_form.text_field :address_line2 %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :area , "Venue Area"%></td>
-					<td><%= addresses_form.text_field :area %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :pincode %></td>
-					<td><%= addresses_form.text_field :pincode %></td>
-				</tr>
-				<tr>
-					<td><%= addresses_form.label :city %></td>
-					<td><%= addresses_form.text_field :city %></td>
-				</tr>
-  			   
-    <% end %>
-  </ul>
-  <tr>
-		<td><%=f.submit "Post Event"%></td>
+	<tr>
+		<td><%= form.label :image %></td>
+		<td><%= form.file_field :image %></td>
 	</tr>
-<% end %>
+	<tr>
+		<td><%= form.label :price %></td>
+		<td><%= form.text_field :price %></td>
+	</tr>
+	<tr>
+		<td><%= form.label :size %></td>
+		<td><%= form.text_field :size %></td>
+	</tr>
+	<ul>
+		<%= form.fields_for :event_address, @address do |addresses_form| %>
 
+		<tr>
+			<td><%= addresses_form.label :address_line1 , 'Venue Address Line 1' %></td>
+			<td><%= addresses_form.text_field :address_line1 %></td>
+		</tr>
+		<tr>
+			<td><%= addresses_form.label :address_line2 , 'Venue Address Line 2' %></td>
+			<td><%= addresses_form.text_field :address_line2 %></td>
+		</tr>
+		<tr>
+			<td><%= addresses_form.label :area , 'Venue Area'%></td>
+			<td><%= addresses_form.text_field :area %></td>
+		</tr>
+		<tr>
+			<td><%= addresses_form.label :pincode %></td>
+			<td><%= addresses_form.text_field :pincode %></td>
+		</tr>
+		<tr>
+			<td><%= addresses_form.label :city %></td>
+			<td><%= addresses_form.text_field :city %></td>
+		</tr>
 
+		<% end %>
+	</ul>
+	<tr>
+		<td><%=form.submit 'Post Event'%></td>
+	</tr>
+	<% end %>
 </table>
-
-
-
-
-
-
-</body>
-
-
-</html>
-
-
-
-

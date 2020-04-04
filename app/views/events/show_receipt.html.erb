@@ -1,0 +1,82 @@
+<br>
+<h4>
+	<strong>
+		<%= @event.title %>
+	</strong>
+</h4>
+<p>-------------------------------------------------------------------------------------</p>
+<% if @event.image != nil %>
+<div style = 'width:450px; height:auto'>
+	<%= image_tag(@event.image , style: 'width:100%') if @event.image.present? %>
+</div>
+<% end %>
+<p>-------------------------------------------------------------------------------------</p>
+<h5><strong>Payment Details:-</strong></h5>
+<table>
+	<tr>
+		<td>
+			Name:
+		</td>
+		<td>
+			<%= @user.name %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Email
+		</td>
+		<td>
+			<%= @user.email %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Quantity:
+		</td>
+		<td>
+			<%= @registration.quantity %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Total amount:
+		</td>
+		<td>
+			<%= @registration.total_amount %>
+		</td>
+	</tr>
+</table>
+<br>
+<h5><strong>Event Details:-</strong></h5>
+<table>
+	<tr>
+		<td>Date:</td>
+		<td>
+			<%= @event.date.strftime("%d %b '%y") %>
+		</td>
+	</tr>
+	<tr>
+		<td>Time:</td>
+		<td>
+			<%= @event.time.strftime('%l:%M %p Onwards') %>
+		</td>
+	</tr>
+	<tr>
+		<td>Venue:</td>
+		<td>
+			<%= @event.event_address.address_line1 %>,
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<%= @event.event_address.address_line2 %>,
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<%= @event.event_address.area %>,<%= @event.event_address.city %>.
+		</td>
+	</tr>
+</table>

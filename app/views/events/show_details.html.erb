@@ -1,0 +1,125 @@
+<br>
+<h4>
+	<strong>
+		<%= @event.title %>
+	</strong>
+</h4>
+<p>----------------------------------------------------------------------------</p>
+<p>
+	Description: <%= @event.description %>
+</p>
+<div style = 'width:400px; height:auto'>
+	<%= image_tag(@event.image, style: 'width:100%') if @event.image.present? %>
+</div>
+<table>
+	<tr>
+		<p>
+			<td>Date:</td>
+			<td><%= @event.date.strftime("%d %b '%y") %></td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>Time:</td>
+			<td><%= @event.time.strftime('%l:%M %p Onwards') %></td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>Address line 1:</td>
+			<td><%= @event.event_address.address_line1 %></td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>Address line 2:</td>
+			<td><%= @event.event_address.address_line2 %></td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>Area:</td>
+			<td><%= @event.event_address.area %></td>
+		</p>
+	</tr>
+	<tr>
+		<p>
+			<td>City:</td>
+			<td><%= @event.event_address.city %></td>
+		</p>
+	</tr>
+	<tr>
+		<% if @event.website != nil %>
+		<p>
+			<td>Website:</td>
+			<td><%= @event.website %></td>
+		</p>
+		<% end %>
+	</tr>
+
+	<% if can? :update, @event %>
+	<table>
+		<tr><br>
+			<td><%= link_to 'Edit Event', edit_event_path(@event.id) %>&emsp;&emsp;</td>
+			<td><%= link_to 'Delete Event', event_path(@event.id), method: :delete %></td>
+		</tr>
+	</table>
+	<% else %>
+	<table>
+		<tr>
+			<br>
+			<% unless @event.is_interested?(@event.id,current_user.id) && @event.is_my_event?(@event.id , current_user.id) %>
+			<td>
+				<%= form_tag(show_interest_path(@event.id), method: :post) do %>
+				<button class = 'btn btn-dark' type = 'submit'>Show Interest</button>&emsp;
+				<% end %>
+			</td>
+			<% else %>
+			<td>
+				<button class = 'btn btn-dark' type = 'submit' disabled>Interested</button>
+			</td>
+			<% end %>
+			<% unless @event.is_registered?(@event.id,current_user.id) && @event.is_my_event?(@event.id , current_user.id) %>
+			<td>
+				<%= form_tag(registration_form_path(@event.id), method: :get) do %>
+				<button class = 'btn btn-dark' type = 'submit'>Register</button>
+				<% end %>
+			</td>
+			<% else %>
+			<td>
+				<button class = 'btn btn-dark' type = 'submit' disabled>Registered</button>&emsp;
+			</td>
+			<% end %>
+		</tr>
+	</table>
+	<% end %>
+	<br>
+	<h5><strong>Comments</strong></h5>
+	<p>----------------------------------------------------------------------------</p>
+	<% @event_comments.each do |comment| %>
+	<table>
+		<tr>
+			<% u = User.find(comment.user_id) %>
+			<td><strong><%= u.name %>:</strong></td>
+			<td><%= comment.comment %></td>
+			<td>
+				<div style = 'width:200px; height:auto'>
+					<%= image_tag(comment.image , style:'width:100%') if comment.image.present? %>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<% end %>
+	<p>----------------------------------------------------------------------------</p>
+
+	<%= form_with scope: :comment, url: post_comment_path(@event.id) , method: :post do |f| %>
+	<table>
+		<tr>
+			<td><%= f.label :comment %>:</td>
+			<td><%= f.text_area :comment %></td>
+			<td><%= f.file_field :image %></td>
+		</tr>
+	</table>
+	<%=f.submit  class:'btn btn-dark' %>
+	<% end %>

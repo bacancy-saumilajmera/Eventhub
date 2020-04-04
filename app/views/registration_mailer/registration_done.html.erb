@@ -1,0 +1,17 @@
+<h4>Hey <%= @user.name %>,<br><br>
+
+  Thank You for Registering yourself in <%= @event.title %>.<br><br>
+
+  Registration Details:-<br>
+  Person Name:- <%= @user.name%> <br>
+  Quantity:- <%= @record.quantity %><br>
+  Total Amount to be Paid:- <%= @record.total_amount%><br><br>
+
+  Event will start from <%= @event.time.strftime('%l:%M %p') %>.<br>
+
+  Venue Details:-<br>
+  <%= @event.event_address.address_line1 %>,<br>
+  <%= @event.event_address.address_line2 %>,<br>
+  <%= @event.event_address.area %>, <%= @event.event_address.city %>.<br><br>
+
+  Hope You 'll enjoy the Event.</h4><br><br>

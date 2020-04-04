@@ -1,2 +1,4 @@
-<h1>Edit Event</h1>
+<h4>Edit Event</h4>
+<% if can? :update, @event %>
 <%= render 'form' %>
+<% end %>

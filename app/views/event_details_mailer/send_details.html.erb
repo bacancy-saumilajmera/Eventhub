@@ -1,0 +1,13 @@
+<h4>Hey <%= @user.name %>,<br><br>
+
+  Thank You for showing your Interest in <%= @event.title %>.<br>
+  We will send you all the updates regarding the event.<br>
+  Here are some details of the Event.<br>
+  Event will start from <%= @event.time.strftime('%l:%M %p') %>.<br>
+
+  Venue Details:-<br>
+  <%= @event.event_address.address_line1 %>,<br>
+  <%= @event.event_address.address_line2 %>,<br>
+  <%= @event.event_address.area %>, <%= @event.event_address.city %>.<br><br>
+
+  Hope You 'll register yourself for the Event soon.</h4>

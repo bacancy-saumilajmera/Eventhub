@@ -1,35 +1,35 @@
-<h2>Event Requests</h2>
+<% if can_respond_requests? %>
+<h4>Event Requests</h4>
 
-<% @event_requests.each do |e| %>
-		
-			<p>
-				Title: <%= e.title %>
-			</p>
-			
-			<p>
-				Description: <%= e.description%>
-			</p>
-			<p>
-				Date: <%= e.date.strftime("%d %b '%y") %>
-			</p>
-			
-			<p>
-				Time: <%= e.time.strftime("%l:%M %p Onwards") %>
-			</p>
-			<% if e.website != nil %>
-				<p>
-					Website: <%= e.website %>
-				</p>
-			<% end %>
-<!-- 
-			<%= link_to "Edit Event", edit_event_path(e.id) %>
+<% @event_requests.each do |event| %>
 
-		  <%= link_to "Delete Event", event_path(e.id), method: :delete %>
+<p>
+	Title: <%= event.title %>
+</p>
 
- -->
- 			<%= link_to "Accept", event_accept_path(e) %>
- 			<%= link_to "Reject", event_reject_path(e) %>
-			<p>---------------------------------------------------</p>
+<p>
+	Description: <%= event.description %>
+</p>
+<div style='width:400px; height:auto'>
+	<%= image_tag(event.image , style:'width:100%') if event.image.present? %>
+</div>
+<p>
+	Date: <%= event.date.strftime("%d %b '%y") %>
+</p>
 
-
-	<% end %>	
+<p>
+	Time: <%= event.time.strftime('%l:%M %p Onwards') %>
+</p>
+<% if event.website != nil %>
+<p>
+	Website: <%= event.website %>
+</p>
+<% end %>
+<%= link_to 'Show Details' , show_details_path(event.id) %>
+<%= link_to 'Accept', event_accept_path(e) %>
+<%= link_to 'Reject', event_reject_path(e) %>
+<p>---------------------------------------------------</p>
+<% end %>
+<% else %>
+<h4>You Can't access this Page </h4>
+<% end %>
